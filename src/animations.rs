@@ -82,7 +82,7 @@ impl TimedAnimation {
         (y_index * self.frame.y as usize) - (self.frame.x as usize - x_index)
     }
 
-    pub fn cycle_animation(&mut self, mut sprite: Mut<TextureAtlasSprite>, direction: &AnimationDirection, delta: Duration, name: &'static str) -> Option<()> {
+    pub fn cycle_animation(&mut self, mut sprite: Mut<TextureAtlasSprite>, direction: &AnimationDirection, delta: Duration) -> Option<()> {
         if self.ready_to_animate(delta) {
             let y_index = self.get_y_index(direction);
             self.previous_dir_index = y_index;

@@ -151,7 +151,7 @@ fn catch_animation_event(
         } 
         // if our current animation is timed based we should cycle it
         else if let Some(timed_animation) = curr_animation.timed_animation() {
-            if let None = timed_animation.cycle_animation(sprite, &animation_entity.last_valid_direction, time.delta(), name) {
+            if let None = timed_animation.cycle_animation(sprite, &animation_entity.last_valid_direction, time.delta()) {
                 animation_entity.in_blocking_animation = false;
                 animation_entity.curr_animation_called = false;
             }
@@ -181,7 +181,7 @@ fn catch_reset_events(
 ) {
     for event in animation_events.iter() {
         // if the entity wasn't found in the query we want to remove it from our data structure
-        let (mut sprite, direction) = match query.get_mut(event.0) {
+        let (sprite, direction) = match query.get_mut(event.0) {
             Ok(q) => q,
             Err(_) => {
                 entities_to_remove.0.push(event.0);
@@ -220,7 +220,6 @@ fn remove_entites(
     mut entities_to_remove: ResMut<EntitesToRemove>
 ) {
     for entity in entities_to_remove.0.iter() {
-        println!("removing {:?}", entity);
         animations.entities.remove(&entity);
     }
     entities_to_remove.0.clear();
