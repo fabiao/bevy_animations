@@ -125,12 +125,12 @@ impl TimedAnimation {
             AnimationDirection::Still => self.previous_dir_index
         }
     }
-    fn is_out_of_bounds(&self, sprite: &Mut<TextureAtlasSprite>, index: usize) -> bool {
+    /*fn is_out_of_bounds(&self, sprite: &Mut<TextureAtlasSprite>, index: usize) -> bool {
         if sprite.field_len() <= index {
             return true;
         }
         false
-    } 
+    }*/
 }
 
 
@@ -197,7 +197,7 @@ impl TransformAnimation {
         direction: &AnimationDirection, 
         transform: Mut<Transform>,
         pixels_per_meter: f32,
-        name: &'static str
+        _name: &'static str
     ) -> Option<()> {
         let y_index = self.get_y_index(direction);
         if self.ready_to_animate(&transform, pixels_per_meter) || y_index != self.previous_dir_index {
@@ -309,7 +309,7 @@ impl LinearTimedAnimation {
         }
     }
 
-    pub fn cycle_animation(&mut self, mut sprite: Mut<TextureAtlasSprite>, delta: Duration, name: &'static str) -> Option<()> {
+    pub fn cycle_animation(&mut self, mut sprite: Mut<TextureAtlasSprite>, delta: Duration, _name: &'static str) -> Option<()> {
         self.animation_timer.tick(delta);
         if self.animation_timer.finished() {
             let x_index = match self.get_x_index() {
@@ -330,7 +330,7 @@ impl LinearTimedAnimation {
         Some(())
     }
 
-    pub fn reset_animation(&mut self, mut sprite: Option<Mut<TextureAtlasSprite>>) {
+    pub fn reset_animation(&mut self, sprite: Option<Mut<TextureAtlasSprite>>) {
         self.animation_tick = 1;
         let new_dur = Duration::from_secs_f32(*self.frame_timings_in_secs.get(0).expect("Error With Animation Timing"));
         self.animation_timer.set_duration(new_dur);
@@ -358,7 +358,7 @@ pub struct LinearTransformAnimation {
 }
 
 impl LinearTransformAnimation {
-    fn new(
+    /*fn new(
         animation_frames: Vec<usize>,
         meters_per_frame: f32,
         handle: Handle<TextureAtlas>,
@@ -377,7 +377,7 @@ impl LinearTransformAnimation {
             direction_indexes,
             repeating,
         }
-    }
+    }*/
 
     fn ready_to_animate(&self, transform: &Mut<Transform>, pixels_per_meter: f32) -> bool {
         let x_diff = (transform.translation.x - self.previous_transform.translation.x).abs();
@@ -451,10 +451,10 @@ impl LinearTransformAnimation {
         }
     }
 
-    fn is_out_of_bounds(&self, sprite: &Mut<TextureAtlasSprite>, index: usize) -> bool {
+    /*fn is_out_of_bounds(&self, sprite: &Mut<TextureAtlasSprite>, index: usize) -> bool {
         if sprite.field_len() <= index {
             return true;
         }
         false
-    } 
+    }*/
 }

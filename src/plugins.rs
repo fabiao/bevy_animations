@@ -35,11 +35,9 @@ impl Plugin for AnimationsPlugin {
             .add_event::<ResetAnimationEvent>()
             .insert_resource(Animations::default())
             .insert_resource(EntitesToRemove::default())
-            .add_system_set(SystemSet::new()
-                .with_system(catch_animation_event.label("events").before("remove"))
-                .with_system(catch_reset_events.label("reset").after("events"))
-                .with_system(remove_entites.label("remove").after("reset"))
-            );
+            .add_system(catch_animation_event.before(remove_entites))
+            .add_system(catch_reset_events.after(catch_animation_event))
+            .add_system(remove_entites.after(catch_reset_events));
     }
 }
 
